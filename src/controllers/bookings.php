@@ -13,8 +13,7 @@ if(isset($_POST['date_search'])){
     $date_debut_limit = mktime(7, 30, 0, (int)substr($date_selected, 5,2), (int)substr($date_selected, 8,2), (int)substr($date_selected, 0,4));
     $date_fin_limit = mktime(16, 30, 0, (int)substr($date_selected, 5,2), (int)substr($date_selected, 8,2), (int)substr($date_selected, 0,4));
     $_SESSION['date_search'] = htmlspecialchars($_POST['date_search'], ENT_QUOTES);
-    var_dump($date_debut_limit);
-    var_dump($date_fin_limit);
+
     //DATA BDD
     $reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);
     $postes = getAllPostes();
