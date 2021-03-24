@@ -1,0 +1,247 @@
+/* ALL DOCUMENT */
+/* ********************************************************************* */
+*{
+    box-sizing: border-box;
+}
+html, body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    overflow-y: hidden;
+}
+.container-fluid{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    color: #A21328;
+}
+.nav-tabs .nav-link.active{
+    background-color:#A21328;
+    color: #FAF3F4;
+    border-color: #FAF3F4;
+}
+legend{
+    border-bottom: 2px solid #303030;
+    margin-bottom: 15px;
+}
+.unshow{
+    display: none;
+}
+/* ********************************************************************* */
+
+/* SIDEBAR */
+/* ********************************************************************* */
+#wrapper {
+    overflow-x: hidden;
+}
+.disabledOverflow{
+    overflow: hidden;
+}
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+  /* background-color: #D01833; */
+  background-color: #000000;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+    margin-top: 100px;
+}
+
+.list-group-item{
+    /* background-color: #D01833; */
+    background-color: #000000;
+    color: #FAF3F4;
+    border-color: #FAF3F4;
+}
+.list-group-item-action:hover {
+    z-index: 1;
+    color: #FAF3F4;
+    text-decoration: none;
+    background-color: #A21328;
+}
+#page-content-wrapper {
+  min-width: 100vw;
+  /* background-color: #CCCCCC; */
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+  z-index: 1;
+}
+
+.sidebar-nav{
+    list-style: none;
+}
+.fa-action{
+    cursor: pointer;
+}
+.navbar{
+    /* background-color: #A21328; */
+    background-color: #000000;
+}
+.btn-primary{
+    color: #FAF3F4;
+    border-color: #a213287a;
+    background-color: #a213287a;
+}
+.btn-primary:hover{
+    color: #FAF3F4;
+    background-color: #A21328;
+    border-color: #A21328;
+}
+
+/* ********************************************************************* */
+
+/* CONTENT PAGE */
+/* ********************************************************************* */
+#starting-page{
+    margin-top: 5rem;
+    margin-left: 0;
+}
+.delimiter-title{
+    height: 85px;
+    width: 5px;
+    background-color: #A21328;
+}
+.sub-delimiter-title{
+    height: 50px;
+    width: 5px;
+    background-color: #A21328;
+}
+.wrapper-content{
+    padding: 2rem;
+}
+.bloc-content{
+    background-color: #ffffff;
+    padding: 0.2rem;
+    min-height: 80vh;
+}
+.bloc-resa{
+    width: 50px;
+    margin-left: 10px;
+}
+
+/* ********************************************************************* */
+
+/* FORM */
+/* ********************************************************************* */
+/* .invalid{
+    border: 2px red solid;
+}
+.valid{
+    border: 2px green solid;
+} */
+.form-check{
+    padding-left: 0;
+    margin-bottom: 0;
+}
+em{
+    color: red;
+}
+/* ********************************************************************* */
+
+/* EMPLOYEE INFORMATIONS */
+/* ********************************************************************* */
+.nav-pills{
+    width: 8rem;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #FAF3F4;
+    background-color: #A21328;
+}
+.content-information{
+    min-height: 80vh;
+}
+.title_tabs{
+    border-bottom: 2px solid #303030;
+    margin-bottom: 15px;
+}
+.title_tabs > h4{
+    font-size: 24px;
+    margin-bottom: 0;
+}
+/* ********************************************************************* */
+/* ********************************************************************* */
+
+/* HOME PAGE DASH */
+/* ********************************************************************* */
+.cadreIndicateur{
+    height: 150px;
+    border-radius: 17px;
+}
+.headerIndicateur{
+    color: #FAF3F4;
+    font-size: 28px;
+}
+.contentIndicateur{
+    font-size: 32px;
+    background-color: #EEEEEE;
+}
+/* ********************************************************************* */
+
+@media (min-width: 768px) {
+
+/* SIDEBAR */
+/* ********************************************************************* */
+#sidebar-wrapper {
+    z-index: 1;
+    margin-left: 0;
+}
+
+#page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    z-index: 1;
+    margin-left: -15rem;
+}
+
+/* ********************************************************************* */
+
+/* CONTENT PAGE */
+/* ********************************************************************* */
+#starting-page{
+    margin-top: 4rem;
+    margin-left: 16rem;
+    overflow: hidden;
+}
+#starting-page.toggled{
+    margin-left: 1rem;
+}
+.bloc-content{
+    padding: 2rem;
+}
+.nav-pills{
+    width: 23rem;
+}
+.bloc-horaire{
+    width: 150px;
+}
+/* ********************************************************************* */
+
+/* FORM READ INFORMATION */
+/* ********************************************************************* */
+.content-tab-vertical{
+    margin-left: 15rem;
+}
+/* ********************************************************************* */
+}

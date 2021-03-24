@@ -1,0 +1,21 @@
+{
+    "name": "jhapa/centre_culturel",
+    "description": "Application de gestion de reservation de poste informatique d'un centre culturel",
+    "authors": [
+        {
+            "name": "nmd974",
+            "email": "jha.payet@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/class/"
+        }
+    },
+    "require": {
+        "altorouter/altorouter": "^2.0",
+        "filp/whoops": "^2.9",
+        "components/jqueryui": "^1.12",
+        "fzaninotto/faker": "^1.9"
+    }
+}
