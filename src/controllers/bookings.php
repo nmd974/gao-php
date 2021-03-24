@@ -16,130 +16,31 @@ $date_fin_limit = mktime(16, 30, 0, getdate()['mon'], getdate()['mday'], getdate
 $reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);
 $postes = getAllPostes();
 
-//Traitement
-//Pour chaque poste dans la liste de resa on ajoute au tableau afin d'optimiser le temps de traitement
-$postes_array_res = [];
-if($reservations){
+function keepResByposte($poste, $reservations, $compare){
+    $reserve = false;
     foreach($reservations as $value){
-        $postes_array_res[] = $value->poste_id;
-    }
-}
-
-function toHTML_poste($postes){
-    if($postes){
-        $i = 0;
-        foreach($postes as $value){
-            $i++;
-            if($i == 1){
-                return <<<HTML
-                <button class="nav-link" id="v-pills-poste-{$value->id}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-poste-{$value->id}" type="button" role="tab" aria-controls="v-pills-poste-{$value->id}" aria-selected="true">Poste - $value->id</button>
-HTML;
-            }else{
-                return <<<HTML
-                <button class="nav-link" id="v-pills-poste-{$value->id}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-poste-{$value->id}" type="button" role="tab" aria-controls="v-pills-poste-{$value->id}" aria-selected="false">Poste - $value->id</button>
-HTML;
+        if($value->poste_id == $poste->id){
+            $date_to_compare = $value->date_debut;
+            for ($i=1; $i <= $value->nb_creneaux; $i++) { 
+                
+                if(date('H:i', $date_to_compare) == $compare){
+                    $reserve = true;
+                    return <<<HTML
+                    <button type="button" class="btn btn-success text-success" data-bs-toggle="modal" data-bs-target="#res-{$value->res_id}">
+                    1
+                    </button>
+    HTML;
+                }
+                $date_to_compare = $date_to_compare + 1800;
             }
+
         }
     }
+    if(!$reserve){
+        return <<<HTML
+        <button type="button" class="btn btn-danger text-danger">
+        0
+        </button>
+HTML;
+    }
 }
-
-function toHTML_tabs($postes, $reservations){
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                    <div class="d-flex flex-wrap w-100">
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                08h00 - 08h30
-                            </div>
-                            <div class="bg-success text-success bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                08h30 - 09h00
-                            </div>
-                            <div class="bg-danger text-danger bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                09h00 - 09h30
-                            </div>
-                            <div class="bg-success text-success bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                09h30 - 10h00
-                            </div>
-                            <div class="bg-danger text-danger bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                10h00 - 10h30
-                            </div>
-                            <div class="bg-success text-success bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                10h30 - 11h00
-                            </div>
-                            <div class="bg-danger text-danger bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                11h00 - 11h30
-                            </div>
-                            <div class="bg-success text-success bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                11h30 - 12h00
-                            </div>
-                            <div class="bg-danger text-danger bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                12h00 - 12h30
-                            </div>
-                            <div class="bg-success text-success bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                12h30 - 13h00
-                            </div>
-                            <div class="bg-danger text-danger bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                13h00 - 13h30
-                            </div>
-                            <div class="bg-success text-success bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                14h30 - 15h00
-                            </div>
-                            <div class="bg-danger text-danger bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                15h00 - 15h30
-                            </div>
-                            <div class="bg-success text-success bloc-resa">0</div>
-                        </div>
-                        <div class="d-flex flex-row me-2 justify-content-md-center justify-content-between w-100">
-                            <div class="bloc-horaire">
-                                15h30 - 16h00
-                            </div>
-                            <div class="bg-danger text-danger bloc-resa">0</div>
-                        </div>
-                    </div>
-                </div>
-}
-
-
