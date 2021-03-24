@@ -1,7 +1,7 @@
 <?php 
-$title = 'Accueil';
-$title_section = "Liste des reservations";
-require dirname(dirname(__DIR__))."/src/controllers/bookings.php";
+    $title = 'Accueil';
+    $title_section = "Liste des reservations";
+    require dirname(dirname(__DIR__))."/src/controllers/bookings.php";
 ?>
 
 <?php if($reservations):?>
@@ -26,11 +26,17 @@ require dirname(dirname(__DIR__))."/src/controllers/bookings.php";
 <?php endif;?>
 
 <div class="content-bloc shadow-lg p-md-5 p-1 h-100 d-flex flex-column">
+    <form method="post">
         <div class="col-md-4 col-12 mb-5">
             <label for="date_jour" class="form-label">Sélectionnez la date</label><br>
-            <input type="date" name="date_jour" class="form-control" id="date_jour"
-            value="<?= (new DateTime())->format('Y-m-d') ?>">
+            <div class="d-flex">
+            <input type="date" name="date_search" class="form-control" id="date_search"
+            value="<?= isset($_SESSION['date_search']) ? htmlspecialchars($_SESSION['date_search']) : (new DateTime())->format('Y-m-d') ?>">
+            <button type="submit" class="btn btn-primary w-55 bg-green mr-5" name="search_btn">Rechercher</button>
+            </div>
+
         </div>
+    </form>
         <div class="d-flex align-items-start" id="content-bloc-change">
             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <?php $i = 0;?>

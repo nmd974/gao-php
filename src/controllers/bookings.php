@@ -6,15 +6,28 @@ require dirname(__DIR__)."/models/postes.php";
 //Rechercher toutes les reservations comprise entre le timestamp du jour debut et timestamp du jour fin
 //Pour chaque poste, on va parcourir creneaux par creneau et on check dans la liste des resa du jour en fonction des conditions
 
+if(isset($_POST['date_search'])){
+    //Transformation des dates
+    date_default_timezone_set("Indian/Reunion");
+    $date_selected = htmlspecialchars($_POST['date_search'], ENT_QUOTES);
+    $date_debut_limit = mktime(7, 30, 0, (int)substr($date_selected, 5,2), (int)substr($date_selected, 8,2), (int)substr($date_selected, 0,4));
+    $date_fin_limit = mktime(16, 30, 0, (int)substr($date_selected, 5,2), (int)substr($date_selected, 8,2), (int)substr($date_selected, 0,4));
+    $_SESSION['date_search'] = htmlspecialchars($_POST['date_search'], ENT_QUOTES);
+    var_dump($date_debut_limit);
+    var_dump($date_fin_limit);
+    //DATA BDD
+    $reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);
+    $postes = getAllPostes();
+}else{
+    //Transformation des dates
+    date_default_timezone_set("Indian/Reunion");
+    $date_debut_limit = mktime(7, 30, 0, getdate()['mon'], getdate()['mday'], getdate()['year']);
+    $date_fin_limit = mktime(16, 30, 0, getdate()['mon'], getdate()['mday'], getdate()['year']);
 
-//Transformation des dates
-date_default_timezone_set("Indian/Reunion");
-$date_debut_limit = mktime(7, 30, 0, getdate()['mon'], getdate()['mday'], getdate()['year']);
-$date_fin_limit = mktime(16, 30, 0, getdate()['mon'], getdate()['mday'], getdate()['year']);
-
-//DATA BDD
-$reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);
-$postes = getAllPostes();
+    //DATA BDD
+    $reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);
+    $postes = getAllPostes();
+}
 
 function keepResByposte($poste, $reservations, $compare){
     $reserve = false;
