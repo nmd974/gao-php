@@ -48,7 +48,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="edit_user_<?= $utilisateur->id?>Label">Modifier un équipement</h5>
+                <h5 class="modal-title" id="edit_user_<?= $utilisateur->id?>Label">Modifier un compte utilisateur</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post">
@@ -81,7 +81,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="delet_user_<?= $utilisateur->id?>Label">Suppression d'un équipement</h5>
+                <h5 class="modal-title" id="delet_user_<?= $utilisateur->id?>Label">Suppression d'un compte utilisateur</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post">
