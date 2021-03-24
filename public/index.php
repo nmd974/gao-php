@@ -14,6 +14,8 @@ $router = new App\Router(dirname(__DIR__) . '/views');
 if($_SESSION["logged"]){
     $router
     ->get('/', 'bookings/index', '')
+    ->get('/utilisateurs', 'users/index', '')
+    ->get('/poste-informatique', 'computers/index', '')
     ->get('/logout', 'auth/logout', '')
     ->run();
 }else{

@@ -59,20 +59,25 @@
         <div class="border-right position-fixed" id="sidebar-wrapper">
 
             <div class="list-group list-group-flush">
-                <a href="./accueil.php"
+                <a href="<?= getenv("URL_APP")?>"
                     class="list-group-item list-group-item-action d-flex align-items-center justify-content-start">
                     <i class="fa fa-tachometer me-3" aria-hidden="true"></i>
-                    <div>Accueil</div>
+                    <div>Tableau de bord</div>
                 </a>
-                <a href="./readEmployee.php"
+                <a href="<?= getenv("URL_APP")?>/utilisateurs"
                     class="list-group-item list-group-item-action d-flex align-items-center justify-content-start">
                     <i class="fa fa-users me-3" aria-hidden="true"></i>
-                    <div>Liste des salariés</div>
+                    <div>Liste des utilisateurs</div>
                 </a>
-                <a href="./createEmployee.php"
+                <a href="<?= getenv("URL_APP")?>/poste-informatique"
+                    class="list-group-item list-group-item-action d-flex align-items-center justify-content-start">
+                    <i class="fa fa-laptop me-3" aria-hidden="true"></i>
+                    <div>Liste des postes informatiques</div>
+                </a>
+                <a href="<?= getenv("URL_APP")?>/reservations/create"
                     class="list-group-item list-group-item-action d-flex align-items-center justify-content-start">
                     <i class="fa fa-plus me-3" aria-hidden="true"></i>
-                    <div>Ajouter un nouveau salarié</div>
+                    <div>Ajouter une reservation</div>
                 </a>
             </div>
         </div>
