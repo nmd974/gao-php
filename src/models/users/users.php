@@ -88,7 +88,7 @@
                 $query = "DELETE FROM `utilisateurs` WHERE id=:id";
                 $sth = $db->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
                 $sth->execute(array(
-                    ':id' => $request['id']
+                    ':id' => $request
                 ));
                 $data = true;
                 return $data;
@@ -109,6 +109,31 @@
         if($db){
             try{
                 $query = "SELECT * FROM `utilisateurs` ORDER BY `nom` ASC";
+                $sth = $db->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+                $sth->execute();
+                $data = $sth->fetchAll(PDO::FETCH_OBJ);
+                return $data;
+            }catch(PDOException $e){
+                $error = $e->getMessage();
+                $_SESSION['flash'] = array('Error', "Echec lors de l'execution de la requete");
+                return $data;
+            }
+        }else{
+            $_SESSION['flash'] = array('Error', "Impossible de se connecter au serveur");
+            return $data;
+        }
+    }
+
+    function searchUser($request){
+        $db = Connection::getPDO();
+        $data = false;
+        if($db){
+            try{
+                $query = "SELECT * FROM `utilisateurs` 
+                WHERE nom LIKE '%$request%'
+                OR prenom LIKE '%$request%'
+                OR carte_id LIKE '%$request%'
+                ORDER BY `nom` ASC";
                 $sth = $db->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
                 $sth->execute();
                 $data = $sth->fetchAll(PDO::FETCH_OBJ);

@@ -84,7 +84,7 @@
                 <h5 class="modal-title" id="delet_user_<?= $utilisateur->id?>Label">Suppression d'un équipement</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" enctype="multipart/form-data" action="<?= getenv("URL_APP") . '/src/controllers/tables/utilisateurs/delete.php'?>">
+            <form method="post">
                 <div class="modal-body">
                     <p>Confirmez vous la suppression du compte de : "<?= ucfirst($utilisateur->prenom) . ' ' . ucfirst($utilisateur->nom) ?>"</p> 
                     <input type="hidden" name="id" value="<?= $utilisateur->id?>">
@@ -104,7 +104,7 @@
 <div class="content-bloc shadow-lg p-md-5 p-1 h-100 d-flex flex-column">
     <div class="d-flex align-items-center justify-content-between flex-wrap my-5">
         <form class="d-flex" method="post">
-            <input class="form-control me-2" type="search" placeholder="Recherche" aria-label="Search">
+            <input class="form-control me-2" type="search" name="search_value" placeholder="Recherche" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Rechercher</button>
             <input type="hidden" name="action" value="rechercher">
         </form>
@@ -134,7 +134,7 @@
                                 <button type="button" class="btn btn-success me-4" data-bs-toggle="modal" data-bs-target="#<?= "edit_user_" . $utilisateur->id?>">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </button>
-                                <button type="button" class="btn btn-danger me-4" data-bs-toggle="modal" data-bs-target="#<?= "delet_user_" . $utilisateur->id?>">
+                                <button type="button" class="btn btn-danger me-4" data-bs-toggle="modal" data-bs-target="#<?= "delete_user_" . $utilisateur->id?>">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
                             </td>
