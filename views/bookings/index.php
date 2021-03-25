@@ -48,9 +48,49 @@
             <div class="tab-content" id="v-pills-tabContent">
                 <?php $i = 0;?>
                 <?php foreach($postes as $poste):?>
-
+                    <!--MODAL-->
+                    <div class="modal fade" id="poste-resa-<?=$poste->id?>" tabindex="-1" data-bs-backdrop="static" aria-labelledby="poste-resa-<?=$poste->id?>-Label" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="poste-resa-<?=$poste->id?>-Label">Créer une réservation sur le poste <?=$poste->id?></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form method="post">
+                                <div class="modal-body">
+                                    <p>Date de reservation : <?= isset($_SESSION['date_search']) ? htmlspecialchars($_SESSION['date_search']) : (new DateTime())->format('Y-m-d') ?></p>
+                                    <div class="d-flex mb-3">
+                                        <input class="form-control me-2" type="search" name="search_value" placeholder="Recherche" aria-label="Search">
+                                        <button class="btn btn-outline-success" type="submit">Rechercher</button>
+                                        <input type="hidden" name="action" value="rechercher">
+                                    </div>
+                                    <select class="form-select mb-3" name="utilisateur_id" required>
+                                        <?php foreach($utilisateurs as $utilisateur):?>
+                                            <option value="<?= $utilisateur->id?>"><?=$utilisateur->nom?> <?=$utilisateur->prenom?> / N° de carte : <?=$utilisateur->carte_id?></option>
+                                        <?php endforeach?>
+                                    </select>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">Heure début</span>
+                                        <input type="time" class="form-control" placeholder="Heure de début" max="16:00" min="08:00" name="date_debut" required>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">Heure de fin</span>
+                                        <input type="time" class="form-control" placeholder="Heure de début" max="16:00" min="08:00" name="date_fin" required>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="id" value="<?=$poste->id?>">
+                                <input type="hidden" name="date_selected" value="<?= isset($_SESSION['date_search']) ? htmlspecialchars($_SESSION['date_search']) : (new DateTime())->format('Y-m-d') ?>">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                                    <button type="submit" class="btn btn-success" name="create_reservation">Créer</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--TAB PANNEL-->
                     <div class="tab-pane fade show <?= $i == 0 ? "active" : ""?>" id="v-pills-poste-<?=$poste->id?>" role="tabpanel" aria-labelledby="v-pills-poste-<?=$poste->id?>-tab">
-                    <button type="button" class="btn btn-success mt-md-0 mt-3 button_add" data-bs-toggle="modal" data-bs-target="#create_reservation">
+                    <button type="button" class="btn btn-success mt-md-0 mt-3 button_add" data-bs-toggle="modal" data-bs-target="#poste-resa-<?=$poste->id?>">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                     <div class="d-flex flex-wrap w-100">
@@ -158,3 +198,7 @@
             </div>
         </div>
 </div>
+
+<script>
+
+</script>

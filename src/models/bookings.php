@@ -27,3 +27,32 @@
         }
     }
 
+    function createBooking($request){
+        $db = Connection::getPDO();
+        $data = null;
+        if($db){
+            try{
+                $query = "INSERT INTO `poste_reserve` SET `utilisateur_id`=:utilisateur_id, `poste_id`=:id, `date_debut`=:date_debut, `date_fin`=:date_fin, `nb_creneaux`=:nb_creneaux";
+                $sth = $db->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+                $sth->execute(array(
+                    ':utilisateur_id' => $request["utilisateur_id"],
+                    ':id' => $request["id"],
+                    ':date_debut' => $request["date_debut"],
+                    ':date_fin' => $request["date_fin"],
+                    ':nb_creneaux' => $request["nb_creneaux"]
+                ));
+                
+                $data = $sth->fetchAll(PDO::FETCH_OBJ);
+                return $data;
+            }catch(PDOException $e){
+                $error = $e->getMessage();
+                $_SESSION['flash'] = array('Error', "Echec lors de l'execution de la requete");
+                return $data;
+            }
+
+        }else{
+            $_SESSION['flash'] = array('Error', "Impossible de se connecter au serveur");
+            return $data;
+        }
+    }
+

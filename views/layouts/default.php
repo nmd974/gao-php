@@ -74,11 +74,6 @@
                     <i class="fa fa-laptop me-3" aria-hidden="true"></i>
                     <div>Liste des postes informatiques</div>
                 </a>
-                <a href="<?= getenv("URL_APP")?>/reservations/create"
-                    class="list-group-item list-group-item-action d-flex align-items-center justify-content-start">
-                    <i class="fa fa-plus me-3" aria-hidden="true"></i>
-                    <div>Ajouter une reservation</div>
-                </a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
