@@ -9,7 +9,6 @@ require dirname(__DIR__)."/models/users/users.php";
 
 if(isset($_POST['action']) && $_POST['action'] == "search_date"){
     //Transformation des dates
-    date_default_timezone_set("Indian/Reunion");
     $date_selected = htmlspecialchars($_POST['date_search'], ENT_QUOTES);
     $date_debut_limit = mktime(7, 30, 0, (int)substr($date_selected, 5,2), (int)substr($date_selected, 8,2), (int)substr($date_selected, 0,4));
     $date_fin_limit = mktime(16, 30, 0, (int)substr($date_selected, 5,2), (int)substr($date_selected, 8,2), (int)substr($date_selected, 0,4));
@@ -22,12 +21,10 @@ if(isset($_POST['action']) && $_POST['action'] == "search_date"){
     unset($_POST['action']);
 }elseif(isset($_POST['action']) && $_POST['action'] == "create_reservation"){
     unset($_POST['action']);
-    date_default_timezone_set("Indian/Reunion");
     $date_debut_limit = mktime(7, 30, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
     $date_fin_limit = mktime(16, 30, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
-    // if(isset($_POST['date_search'])){
-    //     unset($_POST['date_search']);
-    // }
+    $_SESSION['date_search'] = htmlspecialchars($_POST['date_selected'], ENT_QUOTES);
+
     //Verification des inputs
     $inputs_required = ["id", "utilisateur_id", "date_debut", "date_fin"];
     $error = false;
@@ -71,7 +68,7 @@ if(isset($_POST['action']) && $_POST['action'] == "search_date"){
         //Recherche dans la bdd s'il y a des reservations sur ce poste et à cette date 
         //resa : 10 / 12 Si la date debut est comprise entre date_fin et date_debut (date_check <= date_fin && date_check >= date_debut) => erreur
         foreach($resa_to_check as $value){
-            if($_POST['date_debut'] <= $date_fin_limit && $_POST['date_debut'] >= $date_debut_limit){
+            if($_POST['date_debut'] <= $value->date_fin && $_POST['date_debut'] >= $value->date_debut){
                 $error = true;
                 $_SESSION['flash'] = array('Error', "Echec lors de la creation de reservation, Creneaux deja reserve");
             }
