@@ -67,7 +67,7 @@
                     ':nb_creneaux' => $request["nb_creneaux"]
                 ));
                 
-                $data = $sth->fetchAll(PDO::FETCH_OBJ);
+                $data = true;
                 return $data;
             }catch(PDOException $e){
                 $error = $e->getMessage();

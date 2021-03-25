@@ -5,6 +5,7 @@
 ?>
 <pre>
 <?php var_dump($reservations);?>
+<?php var_dump($date_debut_limit);?>
 </pre>
 <?php if($reservations):?>
         <?php foreach($reservations as $reservation):?>
@@ -35,11 +36,11 @@
         <div class="col-md-4 col-12 mb-5">
             <label for="date_jour" class="form-label">Sélectionnez la date</label><br>
             <div class="d-flex">
-            <input type="date" name="date_search" class="form-control" id="date_search"
+            <input type="date" name="date_search" class="form-control" id="date_search" min="<?= (new DateTime())->format('Y-m-d') ?>"
             value="<?= isset($_POST['date_search']) ? htmlspecialchars($_POST['date_search']) : (new DateTime())->format('Y-m-d') ?>">
             <button type="submit" class="btn btn-primary w-55 bg-green mr-5" name="search_btn">Rechercher</button>
             </div>
-
+            <input type="hidden" name="action" value="search_date">
         </div>
     </form>
         <div class="d-flex align-items-start" id="content-bloc-change">
@@ -61,14 +62,9 @@
                                 <h5 class="modal-title" id="poste-resa-<?=$poste->id?>-Label">Créer une réservation sur le poste <?=$poste->id?></h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form method="post" class="create_res">
+                            <form method="post" class="create_resa">
                                 <div class="modal-body">
-                                    <p>Date de reservation : <?= isset($_SESSION['date_search']) ? htmlspecialchars($_SESSION['date_search']) : (new DateTime())->format('Y-m-d') ?></p>
-                                    <div class="d-flex mb-3">
-                                        <input class="form-control me-2" type="search" name="search_value" placeholder="Recherche" aria-label="Search">
-                                        <button class="btn btn-outline-success" type="submit">Rechercher</button>
-                                        <input type="hidden" name="action" value="rechercher">
-                                    </div>
+                                    <p class="mb-3">Date de reservation : <?= isset($_SESSION['date_search']) ? htmlspecialchars($_SESSION['date_search']) : (new DateTime())->format('Y-m-d') ?></p>
                                     <select class="form-select mb-3" name="utilisateur_id" required>
                                         <?php foreach($utilisateurs as $utilisateur):?>
                                             <option value="<?= $utilisateur->id?>"><?=$utilisateur->nom?> <?=$utilisateur->prenom?> / N° de carte : <?=$utilisateur->carte_id?></option>
@@ -84,7 +80,8 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="id" value="<?=$poste->id?>">
-                                <input type="hidden" name="date_selected" value="<?= isset($_SESSION['date_search']) ? htmlspecialchars($_SESSION['date_search']) : (new DateTime())->format('Y-m-d') ?>">
+                                <input type="hidden" name="action" value="create_reservation">
+                                <input type="hidden" name="date_selected" value="<?= isset($_POST['date_search']) ? htmlspecialchars($_POST['date_search']) : (new DateTime())->format('Y-m-d') ?>">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
                                     <button type="submit" class="btn btn-success" name="create_reservation">Créer</button>
@@ -209,6 +206,7 @@
 var forms_create = document.querySelectorAll(".create_resa");
 forms_create.forEach(el => {
     el.addEventListener('keypress', function(e){
+        console.log(e);
         if (e.which == 13) {
         return false;
     }

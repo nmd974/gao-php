@@ -7,7 +7,7 @@ require dirname(__DIR__)."/models/users/users.php";
 //Rechercher toutes les reservations comprise entre le timestamp du jour debut et timestamp du jour fin
 //Pour chaque poste, on va parcourir creneaux par creneau et on check dans la liste des resa du jour en fonction des conditions
 
-if(isset($_POST['date_search'])){
+if(isset($_POST['action']) && $_POST['action'] == "search_date"){
     //Transformation des dates
     date_default_timezone_set("Indian/Reunion");
     $date_selected = htmlspecialchars($_POST['date_search'], ENT_QUOTES);
@@ -19,11 +19,15 @@ if(isset($_POST['date_search'])){
     $reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);
     $postes = getAllPostes();
     $utilisateurs = getAllUsers();
-}elseif(isset($_POST['create_reservation'])){
+    unset($_POST['action']);
+}elseif(isset($_POST['action']) && $_POST['action'] == "create_reservation"){
+    unset($_POST['action']);
     date_default_timezone_set("Indian/Reunion");
-    if(isset($_POST['date_search'])){
-        unset($_POST['date_search']);
-    }
+    $date_debut_limit = mktime(7, 30, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
+    $date_fin_limit = mktime(16, 30, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
+    // if(isset($_POST['date_search'])){
+    //     unset($_POST['date_search']);
+    // }
     //Verification des inputs
     $inputs_required = ["id", "utilisateur_id", "date_debut", "date_fin"];
     $error = false;
@@ -36,29 +40,32 @@ if(isset($_POST['date_search'])){
         }
     }
     if(!$error){
-        if((int)substr($_POST['date_debut'],4,2) >= 30){
-            $min_debut = 30;
-        }else{
+        if((int)substr($_POST['date_debut'],4,2) > 30){
             $min_debut = 0;
+            $heure_debut = (int)substr($_POST['date_debut'],0,2) + 1;
+        }elseif((int)substr($_POST['date_debut'],4,2) < 30){
+            $min_debut = 30;
+            $heure_debut = (int)substr($_POST['date_debut'],0,2);
         }
-        if((int)substr($_POST['date_fin'],4,2) >= 30){
-            $min_fin = 30;
-        }else{
+        if((int)substr($_POST['date_fin'],4,2) > 30){
             $min_fin = 0;
+            $heure_fin = (int)substr($_POST['date_fin'],0,2) + 1;
+        }elseif((int)substr($_POST['date_fin'],4,2) < 30){
+            $min_fin = 30;
+            $heure_fin = (int)substr($_POST['date_fin'],0,2);
         }
         //Il faut que la date de debut soit inferieure à la date de fin
         //Transformation des dates de reservation
-        $_POST['date_debut'] = mktime((int)substr($_POST['date_debut'],0,2), $min_debut, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
-        $_POST['date_fin'] = mktime((int)substr($_POST['date_fin'],0,2), $min_fin, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
+        $_POST['date_debut'] = mktime($heure_debut, $min_debut, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
+        $_POST['date_fin'] = mktime($heure_fin, $min_fin, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
         $_POST['nb_creneaux'] = ($_POST['date_fin'] - $_POST['date_debut']) / 1800;
-        $date_debut_limit = mktime(7, 30, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
-        $date_fin_limit = mktime(16, 30, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
 
         //Recuperation des resa sur le poste au jour selectionne
         $resa_to_check = getBookingsByDateByPoste($date_debut_limit,$date_fin_limit, $_POST['id']);
 
         if($date_debut_limit > $_POST['date_debut'] || $date_fin_limit < $_POST['date_fin']){
             $error = true;
+            $_SESSION['flash'] = array('Error', "Echec lors de la creation de reservation. En dehors des horaires d'ouvertures");
         }
         //On verifie dans les resa sur ce poste
         //Recherche dans la bdd s'il y a des reservations sur ce poste et à cette date 
@@ -66,6 +73,7 @@ if(isset($_POST['date_search'])){
         foreach($resa_to_check as $value){
             if($_POST['date_debut'] <= $date_fin_limit && $_POST['date_debut'] >= $date_debut_limit){
                 $error = true;
+                $_SESSION['flash'] = array('Error', "Echec lors de la creation de reservation, Creneaux deja reserve");
             }
         }
         if(!$error){
@@ -75,9 +83,12 @@ if(isset($_POST['date_search'])){
                 $reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);
                 $postes = getAllPostes();
                 $utilisateurs = getAllUsers();
+            }else{
+                $reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);
+                $postes = getAllPostes();
+                $utilisateurs = getAllUsers();
             }
         }else{
-            $_SESSION['flash'] = array('Error', "Echec lors de la creation de reservation, Creneaux deja reserve");
             $reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);
             $postes = getAllPostes();
             $utilisateurs = getAllUsers();
