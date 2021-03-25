@@ -10,4 +10,4 @@ $_SESSION["verification"] = false;
 
 date_default_timezone_set("Indian/Reunion");
 $_ENV['URL_APP'] = "";
-putenv("URL_APP=http://localhost:8080");
+// putenv("URL_APP=http://localhost:8080");
