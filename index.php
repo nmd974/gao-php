@@ -1,6 +1,6 @@
 <?php
-require '../vendor/autoload.php';
-require '../src/session.php';
+require './vendor/autoload.php';
+require './src/session.php';
 
 //Ajout de la customisation du debbogage php
 $whoops = new \Whoops\Run;
@@ -8,7 +8,7 @@ $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
 //Ici on dégini le dossier principal
-$router = new App\Router(dirname(__DIR__) . '/views');
+$router = new App\Router(__DIR__ . '/views');
 
 //On détermine les différentes routes via la class Router
 if($_SESSION["logged"]){

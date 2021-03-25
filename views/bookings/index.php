@@ -3,7 +3,9 @@
     $title_section = "Tableau de bord";
     require dirname(dirname(__DIR__))."/src/controllers/bookings.php";
 ?>
-
+<pre>
+<?php var_dump($reservations);?>
+</pre>
 <?php if($reservations):?>
         <?php foreach($reservations as $reservation):?>
                 <div class="modal fade" id="res-<?=$reservation->res_id?>" tabindex="-1" aria-labelledby="res-<?=$reservation->res_id?>-Label" aria-hidden="true">
@@ -15,6 +17,9 @@
                     </div>
                     <div class="modal-body">
                         <p class="text-bold">Reservé de : <?=date('H:i:s', $reservation->date_debut)?> à <?=date('H:i:s', $reservation->date_fin)?> </p>
+                        <p class="text-bold">Nom : <?=$reservation->nom?></p>
+                        <p class="text-bold">Prenom : <?=$reservation->prenom?></p>
+                        <p class="text-bold">N° de carte : <?=$reservation->carte_id?></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -31,7 +36,7 @@
             <label for="date_jour" class="form-label">Sélectionnez la date</label><br>
             <div class="d-flex">
             <input type="date" name="date_search" class="form-control" id="date_search"
-            value="<?= isset($_SESSION['date_search']) ? htmlspecialchars($_SESSION['date_search']) : (new DateTime())->format('Y-m-d') ?>">
+            value="<?= isset($_POST['date_search']) ? htmlspecialchars($_POST['date_search']) : (new DateTime())->format('Y-m-d') ?>">
             <button type="submit" class="btn btn-primary w-55 bg-green mr-5" name="search_btn">Rechercher</button>
             </div>
 
@@ -56,7 +61,7 @@
                                 <h5 class="modal-title" id="poste-resa-<?=$poste->id?>-Label">Créer une réservation sur le poste <?=$poste->id?></h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form method="post">
+                            <form method="post" class="create_res">
                                 <div class="modal-body">
                                     <p>Date de reservation : <?= isset($_SESSION['date_search']) ? htmlspecialchars($_SESSION['date_search']) : (new DateTime())->format('Y-m-d') ?></p>
                                     <div class="d-flex mb-3">
@@ -200,5 +205,13 @@
 </div>
 
 <script>
-
+//Blocage de l'appuie sur la touche entrée
+var forms_create = document.querySelectorAll(".create_resa");
+forms_create.forEach(el => {
+    el.addEventListener('keypress', function(e){
+        if (e.which == 13) {
+        return false;
+    }
+    })
+})
 </script>
