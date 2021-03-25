@@ -19,6 +19,32 @@ if(isset($_POST['action']) && $_POST['action'] == "search_date"){
     $postes = getAllPostes();
     $utilisateurs = getAllUsers();
     unset($_POST['action']);
+}elseif(isset($_POST['action']) && $_POST['action'] == "annulation_resa"){
+    unset($_POST['action']);
+    $date_debut_limit = mktime(7, 30, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
+    $date_fin_limit = mktime(16, 30, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
+    $_SESSION['date_search'] = htmlspecialchars($_POST['date_selected'], ENT_QUOTES);
+
+    if($_POST['id'] != ""){
+        $id = intval(htmlspecialchars($_POST['id']));
+        $response = deleteBooking($id);
+        if($response){
+            $_SESSION['flash'] = array('Success', "Reservation annulée");
+            $reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);
+            $postes = getAllPostes();
+            $utilisateurs = getAllUsers();
+        }else{
+            $_SESSION['flash'] = array('Error', "Echec lors de l'annulation de la reservation");
+            $reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);
+            $postes = getAllPostes();
+            $utilisateurs = getAllUsers();
+        }
+    }else{
+        $_SESSION['flash'] = array('Error', "Echec lors de l'annulation de la reservation");
+        $reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);
+        $postes = getAllPostes();
+        $utilisateurs = getAllUsers();
+    }
 }elseif(isset($_POST['action']) && $_POST['action'] == "create_reservation"){
     unset($_POST['action']);
     $date_debut_limit = mktime(7, 30, 0, (int)substr($_POST['date_selected'], 5,2), (int)substr($_POST['date_selected'], 8,2), (int)substr($_POST['date_selected'], 0,4));
@@ -98,9 +124,15 @@ if(isset($_POST['action']) && $_POST['action'] == "search_date"){
     }
 }else{
     //Transformation des dates
-    date_default_timezone_set("Indian/Reunion");
-    $date_debut_limit = mktime(7, 30, 0, getdate()['mon'], getdate()['mday'], getdate()['year']);
-    $date_fin_limit = mktime(16, 30, 0, getdate()['mon'], getdate()['mday'], getdate()['year']);
+    if(isset($_SESSION['date_search'])){
+        $date_debut_limit = mktime(7, 30, 0, (int)substr($_SESSION['date_search'], 5,2), (int)substr($_SESSION['date_search'], 8,2), (int)substr($_SESSION['date_search'], 0,4));
+        $date_fin_limit = mktime(16, 30, 0, (int)substr($_SESSION['date_search'], 5,2), (int)substr($_SESSION['date_search'], 8,2), (int)substr($_SESSION['date_search'], 0,4));
+    }else{
+        date_default_timezone_set("Indian/Reunion");
+        $date_debut_limit = mktime(7, 30, 0, getdate()['mon'], getdate()['mday'], getdate()['year']);
+        $date_fin_limit = mktime(16, 30, 0, getdate()['mon'], getdate()['mday'], getdate()['year']);
+    }
+
 
     //DATA BDD
     $reservations = getBookingsByDate($date_debut_limit, $date_fin_limit);

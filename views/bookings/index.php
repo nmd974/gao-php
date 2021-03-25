@@ -3,9 +3,7 @@
     $title_section = "Tableau de bord";
     require dirname(dirname(__DIR__))."/src/controllers/bookings.php";
 ?>
-<pre>
-<?php var_dump($date_debut_limit);?>
-</pre>
+
 <?php if($reservations):?>
         <?php foreach($reservations as $reservation):?>
                 <div class="modal fade" id="res-<?=$reservation->res_id?>" tabindex="-1" aria-labelledby="res-<?=$reservation->res_id?>-Label" aria-hidden="true">
@@ -16,21 +14,55 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p class="text-bold">Reservé de : <?=date('H:i:s', $reservation->date_debut)?> à <?=date('H:i:s', $reservation->date_fin)?> </p>
-                        <p class="text-bold">Nom : <?=$reservation->nom?></p>
-                        <p class="text-bold">Prenom : <?=$reservation->prenom?></p>
-                        <p class="text-bold">N° de carte : <?=$reservation->carte_id?></p>
+                        <p class="fw-bold">Reservé de : <?=date('H:i', $reservation->date_debut)?> à <?=date('H:i', $reservation->date_fin)?> </p>
+                        <p class="fw-bold">Nom : <?=$reservation->nom?></p>
+                        <p class="fw-bold">Prenom : <?=$reservation->prenom?></p>
+                        <p class="fw-bold">N° de carte : <?=$reservation->carte_id?></p>
                     </div>
+                    <div class="d-flex justify-content-end my-3 me-3">
+                    <button type="button" class="btn btn-danger w-50" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#res-delete-<?=$reservation->res_id?>">
+                        Annuler la reservation
+                    </button>
+                    </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                     </div>
                     </div>
                 </div>
                 </div>
+                <!--modal de delete-->
+                <div class="modal fade" id="res-delete-<?=$reservation->res_id?>" tabindex="1" aria-labelledby="res-delete-<?=$reservation->res_id?>Label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="res-delete-<?=$reservation->res_id?>Label">Détails de la réservation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form method="post">
+                                <div class="modal-body">
+                                    <p>Confirmez vous la suppression de la réservation ci-dessous ?</p>
+                                    <p class="fw-bold">Reservé de : <?=date('H:i', $reservation->date_debut)?> à <?=date('H:i', $reservation->date_fin)?> </p>
+                                    <p class="fw-bold">Nom : <?=$reservation->nom?></p>
+                                    <p class="fw-bold">Prenom : <?=$reservation->prenom?></p>
+                                    <p class="fw-bold">N° de carte : <?=$reservation->carte_id?></p>
+                                    <input type="hidden" name="id" value="<?=$reservation->res_id?>">
+                                    <input type="hidden" name="action" value="annulation_resa">
+                                    <input type="hidden" name="date_selected" value="<?= isset($_SESSION['date_search']) ? htmlspecialchars($_SESSION['date_search']) : (new DateTime())->format('Y-m-d') ?>">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                    <button type="submit" class="btn btn-success" name="cancel_reservation">Confirmer</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
     <?php endforeach;?>
 <?php endif;?>
 
 <div class="content-bloc shadow-lg p-md-5 p-1 h-100 d-flex flex-column">
+
     <form method="post">
         <div class="col-md-4 col-12 mb-5">
             <label for="date_jour" class="form-label">Sélectionnez la date</label><br>
@@ -42,6 +74,7 @@
             <input type="hidden" name="action" value="search_date">
         </div>
     </form>
+
         <div class="d-flex align-items-start" id="content-bloc-change">
             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <?php $i = 0;?>

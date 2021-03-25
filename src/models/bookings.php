@@ -81,3 +81,26 @@
         }
     }
 
+    function deleteBooking($request){
+        $db = Connection::getPDO();
+        $data = false;
+        if($db){
+            try{
+                $query = "DELETE FROM `poste_reserve` WHERE res_id=:id";
+                $sth = $db->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+                $sth->execute(array(
+                    ':id' => $request
+                ));
+                $data = true;
+                return $data;
+            }catch(PDOException $e){
+                $error = $e->getMessage();
+                $_SESSION['flash'] = array('Error', "Echec lors de l'execution de la requete");
+                return $data;
+            }
+        }else{
+            $_SESSION['flash'] = array('Error', "Impossible de se connecter au serveur");
+            return $data;
+        }
+    }
+
