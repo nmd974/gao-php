@@ -1,0 +1,8 @@
+<Directory /public/>
+    Options Indexes FollowSymLinks
+    Require all granted
+    AllowOverride All
+    RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule . index.php [L]
+</Directory>

@@ -1,6 +1,6 @@
 <?php 
     $title = 'Accueil';
-    $title_section = "Liste des reservations";
+    $title_section = "Tableau de bord";
     require dirname(dirname(__DIR__))."/src/controllers/bookings.php";
 ?>
 
@@ -14,7 +14,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Reservé de : <?=date('H:i:s', $reservation->date_debut)?> à <?=date('H:i:s', $reservation->date_fin)?> </p>
+                        <p class="text-bold">Reservé de : <?=date('H:i:s', $reservation->date_debut)?> à <?=date('H:i:s', $reservation->date_fin)?> </p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -48,7 +48,11 @@
             <div class="tab-content" id="v-pills-tabContent">
                 <?php $i = 0;?>
                 <?php foreach($postes as $poste):?>
+
                     <div class="tab-pane fade show <?= $i == 0 ? "active" : ""?>" id="v-pills-poste-<?=$poste->id?>" role="tabpanel" aria-labelledby="v-pills-poste-<?=$poste->id?>-tab">
+                    <button type="button" class="btn btn-success mt-md-0 mt-3 button_add" data-bs-toggle="modal" data-bs-target="#create_reservation">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
                     <div class="d-flex flex-wrap w-100">
                         
                         <div class="d-flex flex-row me-2 mb-3 justify-content-md-center justify-content-between w-100 align-items-center">

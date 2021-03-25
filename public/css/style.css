@@ -33,10 +33,6 @@ legend{
 .unshow{
     display: none;
 }
-/* ********************************************************************* */
-
-/* SIDEBAR */
-/* ********************************************************************* */
 #wrapper {
     overflow-x: hidden;
 }
@@ -50,7 +46,6 @@ legend{
   -moz-transition: margin .25s ease-out;
   -o-transition: margin .25s ease-out;
   transition: margin .25s ease-out;
-  /* background-color: #D01833; */
   background-color: #000000;
 }
 
@@ -65,7 +60,6 @@ legend{
 }
 
 .list-group-item{
-    /* background-color: #D01833; */
     background-color: #000000;
     color: #FAF3F4;
     border-color: #FAF3F4;
@@ -78,7 +72,6 @@ legend{
 }
 #page-content-wrapper {
   min-width: 100vw;
-  /* background-color: #CCCCCC; */
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -93,7 +86,6 @@ legend{
     cursor: pointer;
 }
 .navbar{
-    /* background-color: #A21328; */
     background-color: #000000;
 }
 .btn-primary{
@@ -106,11 +98,6 @@ legend{
     background-color: #A21328;
     border-color: #A21328;
 }
-
-/* ********************************************************************* */
-
-/* CONTENT PAGE */
-/* ********************************************************************* */
 #starting-page{
     margin-top: 5rem;
     margin-left: 0;
@@ -155,10 +142,6 @@ legend{
 em{
     color: red;
 }
-/* ********************************************************************* */
-
-/* EMPLOYEE INFORMATIONS */
-/* ********************************************************************* */
 .nav-pills{
     width: 8rem;
 }
@@ -177,11 +160,6 @@ em{
     font-size: 24px;
     margin-bottom: 0;
 }
-/* ********************************************************************* */
-/* ********************************************************************* */
-
-/* HOME PAGE DASH */
-/* ********************************************************************* */
 .cadreIndicateur{
     height: 150px;
     border-radius: 17px;
@@ -194,54 +172,52 @@ em{
     font-size: 32px;
     background-color: #EEEEEE;
 }
-/* ********************************************************************* */
+.button_add{
+    position: fixed;
+    bottom: 0;
+    right: 10px;
+    border-radius: 50%;
+}
 
 @media (min-width: 768px) {
+    #sidebar-wrapper {
+        z-index: 1;
+        margin-left: 0;
+    }
 
-/* SIDEBAR */
-/* ********************************************************************* */
-#sidebar-wrapper {
-    z-index: 1;
-    margin-left: 0;
-}
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
 
-#page-content-wrapper {
-    min-width: 0;
-    width: 100%;
-}
-
-#wrapper.toggled #sidebar-wrapper {
-    z-index: 1;
-    margin-left: -15rem;
-}
-
-/* ********************************************************************* */
-
-/* CONTENT PAGE */
-/* ********************************************************************* */
-#starting-page{
-    margin-top: 4rem;
-    margin-left: 16rem;
-    overflow: hidden;
-}
-#starting-page.toggled{
-    margin-left: 1rem;
-}
-.bloc-content{
-    padding: 2rem;
-}
-.nav-pills{
-    width: 23rem;
-}
-.bloc-horaire{
-    width: 150px;
-}
-/* ********************************************************************* */
-
-/* FORM READ INFORMATION */
-/* ********************************************************************* */
-.content-tab-vertical{
-    margin-left: 15rem;
-}
-/* ********************************************************************* */
+    #wrapper.toggled #sidebar-wrapper {
+        z-index: 1;
+        margin-left: -15rem;
+    }
+    #starting-page{
+        margin-top: 4rem;
+        margin-left: 16rem;
+        overflow: hidden;
+    }
+    #starting-page.toggled{
+        margin-left: 1rem;
+    }
+    .bloc-content{
+        padding: 2rem;
+    }
+    .nav-pills{
+        width: 23rem;
+    }
+    .bloc-horaire{
+        width: 150px;
+    }
+    .content-tab-vertical{
+        margin-left: 15rem;
+    }
+    .button_add{
+        position: fixed;
+        bottom: 50px;
+        right: 100px;
+        border-radius: 50%;
+    }
 }
