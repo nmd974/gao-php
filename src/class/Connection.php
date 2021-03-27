@@ -11,7 +11,7 @@ use \PDO;
         // $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         // return $pdo;
-        $cleardb_url = parse_url("CLEARDB_DATABASE_URL");
+        $cleardb_url = parse_url(getenv("CLEARDB_DATABASE_URL"));
         $cleardb_server = $cleardb_url["host"];
         $cleardb_username = $cleardb_url["user"];
         $cleardb_password = $cleardb_url["pass"];
