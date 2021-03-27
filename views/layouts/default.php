@@ -56,6 +56,7 @@
         <?php endif;?>
 
         <!-- Sidebar -->
+        <?php if(isset($_SESSION['logged']) && $_SESSION['logged']):?>
         <div class="border-right position-fixed" id="sidebar-wrapper">
 
             <div class="list-group list-group-flush">
@@ -76,26 +77,28 @@
                 </a>
             </div>
         </div>
+        <?php endif;?>
         <!-- /#sidebar-wrapper -->
-
         <!-- Page Content -->
         <div id="page-content-wrapper">
-
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
                 <div class="container-fluid d-flex justify-content-between">
                     <div class="ms-2 d-flex align-items-center">
+                    <?php if(isset($_SESSION['logged']) && $_SESSION['logged']):?>
                         <i class="fa fa-bars fa-2x fa-action" style="color:white;" aria-hidden="true"
                             id="sidebar-toggle"></i>
+                    <?php endif;?>
                         <a class="navbar-brand ms-2" href="./accueil.php">Centre culturel</a>
                     </div>
-
-                    <a href="<?=getenv("URL_APP")?>/logout"><i class="fa fa-power-off fa-2x me-2 fa-action" id="logout" style="color:white;" aria-hidden="true"></i></a>
+                    <?php if(isset($_SESSION['logged']) && $_SESSION['logged']):?>
+                        <a href="<?=getenv("URL_APP")?>/logout"><i class="fa fa-power-off fa-2x me-2 fa-action" id="logout" style="color:white;" aria-hidden="true"></i></a>
+                    <?php else:?>
+                        <a href="<?=getenv("URL_APP")?>"><i class="fa fa-power-off fa-2x me-2 fa-action" id="logout" style="color:white;" aria-hidden="true"></i></a>
+                    <?php endif;?>
                 </div>
             </nav>
-
         </div>
         <!-- /#page-content-wrapper -->
-
     </div>
     <!-- /#wrapper -->
     <div class="container-fluid">
@@ -105,11 +108,9 @@
                 <div class="delimiter-title ms-1"></div>
                 <h2 class="ms-4"><?= $title_section ?? 'Centre culturel' ?></h2>
             </div>
-
             <div class="bloc-content">
                 <!-- METTRE ICI LE CONTENU-->
                 <?= $content ?>
-
             </div>
         </div>
         <!-- </div> -->
@@ -128,12 +129,13 @@
                 $("#wrapper").toggleClass("toggled");
                 $("#starting-page").toggleClass("toggled");
             });
-
+            <?php if(isset($_SESSION['logged']) && $_SESSION['logged']):?>
             $('html').css('overflow-y', 'scroll');
             //Gestion du loader
             $(document).ready(function (){
                 $('#loader_wrapper').remove();
             })
+            <?php endif;?>
             //Gestion des msg flash
             <?php if(isset($_SESSION['flash'])):?>   
                 var toast = new bootstrap.Toast(document.getElementById('liveToast'))
