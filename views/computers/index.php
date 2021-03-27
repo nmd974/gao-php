@@ -17,16 +17,8 @@
             <form method="post">
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="nom">
-                        <label>Nom<span class="text-danger">*</span></label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="prenom">
-                        <label>Prenom<span class="text-danger">*</span></label>
-                    </div>
-                    <div class="mb-3">
-                        <label>Date de naissance<span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" name="date_naissance">
+                        <textarea class="form-control" name="description" style="height: 100px"></textarea>
+                        <label>Description<span class="text-danger">*</span></label>
                     </div>
                 </div>
                 <input type="hidden" name="action" value="create">
