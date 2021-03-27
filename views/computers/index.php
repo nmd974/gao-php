@@ -145,11 +145,11 @@
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </button>
                                 <?php if($poste->etat == "actif"):?>
-                                <button type="button" class="btn btn-danger me-4" data-bs-toggle="modal" data-bs-target="#<?= "edit_poste_etat_" . $poste->id?>">
+                                <button type="button" class="btn btn-danger me-4 edit_poste" data-bs-toggle="modal" data-bs-target="#<?= "edit_poste_etat_" . $poste->id?>">
                                         Desactiver
                                 </button>
                                 <?php else:?>
-                                    <button type="button" class="btn btn-success me-4" data-bs-toggle="modal" data-bs-target="#<?= "edit_poste_etat_" . $poste->id?>">
+                                    <button type="button" class="btn btn-success me-4 edit_poste" data-bs-toggle="modal" data-bs-target="#<?= "edit_poste_etat_" . $poste->id?>">
                                         Activer
                                 </button>
                                 <?php endif;?>

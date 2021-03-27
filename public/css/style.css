@@ -178,6 +178,9 @@ em{
     right: 10px;
     border-radius: 50%;
 }
+.edit_poste{
+    width: 100px;
+}
 
 @media (min-width: 768px) {
     #sidebar-wrapper {
