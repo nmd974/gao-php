@@ -130,6 +130,8 @@
                 $("#wrapper").toggleClass("toggled");
                 $("#starting-page").toggleClass("toggled");
             });
+        <?php else:?>
+            $("#starting-page").toggleClass("toggled");
         <?php endif;?>
             $('html').css('overflow-y', 'scroll');
             //Gestion du loader
