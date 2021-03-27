@@ -124,18 +124,19 @@
         
         <!-- GESTION SIDEBAR TOGGLE -->
         <script>
+        <?php if(isset($_SESSION['logged']) && $_SESSION['logged']):?>
             $("#sidebar-toggle").click(function (e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
                 $("#starting-page").toggleClass("toggled");
             });
-            <?php if(isset($_SESSION['logged']) && $_SESSION['logged']):?>
+        <?php endif;?>
             $('html').css('overflow-y', 'scroll');
             //Gestion du loader
             $(document).ready(function (){
                 $('#loader_wrapper').remove();
             })
-            <?php endif;?>
+            
             //Gestion des msg flash
             <?php if(isset($_SESSION['flash'])):?>   
                 var toast = new bootstrap.Toast(document.getElementById('liveToast'))
